@@ -1,1 +1,26 @@
+源码准备
+
+从 Git 仓库克隆指定 commit（dc63f96）并下载源码压缩包 python-benefits-2026.07.1~rc11.tar.gz。
+
+对源码的兼容性修正（%prep 阶段）
+
+将 pyproject.toml 中的 setuptools 版本要求从 >=83.0.0 降为 >=68.0.0（适配 openEuler 的 setuptools 版本）。
+
+将 requires-python 从 >=3.12 改为 >=3.11。
+
+移除对 setuptools-scm 的依赖，并注入 SETUPTOOLS_SCM_PRETEND_VERSION 环境变量来替代。
+
+修改了几个 Python 源文件中的字符串引号语法（如 strftime 和 reverse_lazy），以兼容当前环境。
+
+构建与安装
+
+使用 pip wheel 构建 wheel，并指定 --no-build-isolation 与 --no-deps，依赖通过 RPM 的 Requires 管理。
+
+安装 wheel 到 BUILDROOT，并执行 Python 字节码编译。
+
+依赖处理
+
+构建环境中额外安装了 python3-devel、python3-pip、python3-wheel 等包。
+
+RPM 自动生成了丰富的 Requires 和 Provides，包含 Django、Azure SDK、Pillow 等具体版本依赖。
 
