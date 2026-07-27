@@ -1,26 +1,7 @@
-源码准备
-
-从 Git 仓库克隆指定 commit（dc63f96）并下载源码压缩包 python-benefits-2026.07.1~rc11.tar.gz。
-
-对源码的兼容性修正（%prep 阶段）
-
-将 pyproject.toml 中的 setuptools 版本要求从 >=83.0.0 降为 >=68.0.0（适配 openEuler 的 setuptools 版本）。
-
-将 requires-python 从 >=3.12 改为 >=3.11。
-
-移除对 setuptools-scm 的依赖，并注入 SETUPTOOLS_SCM_PRETEND_VERSION 环境变量来替代。
-
-修改了几个 Python 源文件中的字符串引号语法（如 strftime 和 reverse_lazy），以兼容当前环境。
-
-构建与安装
-
-使用 pip wheel 构建 wheel，并指定 --no-build-isolation 与 --no-deps，依赖通过 RPM 的 Requires 管理。
-
-安装 wheel 到 BUILDROOT，并执行 Python 字节码编译。
-
-依赖处理
-
-构建环境中额外安装了 python3-devel、python3-pip、python3-wheel 等包。
-
-RPM 自动生成了丰富的 Requires 和 Provides，包含 Django、Azure SDK、Pillow 等具体版本依赖。
-
+1.在引入Java包mocha时，其依赖jspecify是用Gradle构建的。引包构建环境是Maven且离线的产生报错。
+- 在预检时构建工具无法通提供则直接打回，不符时看能不能替代或是向下兼容，否则也打回。
+2.在预检的联网阶段会将构建工具和依赖一样匹配升级，但实际不许。
+- 用构建白名单解决，将所有已有构建工具写成白名单，ai拿着这份白名单去过滤。
+3.在构建benifits时ai出现跳步bug，分析是skill对“缺包”状态定义不清晰导致未写入构建引入包引入
+- 对该步骤扩写，调用脚本重新判断缺包，确保ai不会因定义不清导致错误判断跳步。
+4.完成“计算人人懂开源”课程的学习并完成相应的考试。
