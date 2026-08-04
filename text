@@ -38,3 +38,30 @@
 将本地修改推送至测试环境，完成功能验证并修复边界异常问题3个，所有测试用例通过。进一步深化AI工具使用，在测试环境上借助AI辅助完成一处功能调整及验证。部门必修培训课程已全部修完，累计进度达成100%。
 
 总体来看，首月各阶段目标均按计划完成。后续将重点提升K8s运维操作的熟练度，并加强设计阶段对异常场景的全面考虑，持续跟进可信认证备考，争取尽早通过
+
+Soft-Validate & Patch OpenAPI
+
+1  Run set -euo pipefail
+20 Run '/home/runner/k8s/index.js'
+
+22 (node:854) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+23 (Use `node --trace-deprecation ...` to show where the warning was created)
+24 ✗ openeuler/eu/openapi.yaml 破失败 2 项, 无法生成 sync PR:
+25 - GET /coprs/{username}/{coprname}/package/{package_name}/add_openeuler_pkg URL 中的 path 参数 `{coprname}` 未在 parameters 段声明。请补充:
+26 - in: path
+27       name: coprname
+28       required: true
+29       schema:
+30           type: string
+31       description: <请填写含义>
+32 - GET /coprs/g/{group_name}/{coprname}/package/{package_name}/add_openeuler_pkg URL 中的 path 参数 `{coprname}` 未在 parameters 段声明。请补充:
+33 - in: path
+34       name: coprname
+35       required: true
+36       schema:
+37           type: string
+38       description: <请填写含义>
+39 Error: Error: failed to run script step: Error: command terminated with non-zero exit code: command terminated with exit code 1
+40 Error: Process completed with exit code 1.
+41 Error: Executing the custom container implementation failed. Please contact your self hosted runner administrator.
+
