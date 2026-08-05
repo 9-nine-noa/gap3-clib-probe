@@ -39,5 +39,16 @@
 
 总体来看，首月各阶段目标均按计划完成。后续将重点提升K8s运维操作的熟练度，并加强设计阶段对异常场景的全面考虑，持续跟进可信认证备考，争取尽早通过
 
-我是基于packages.test.osinfra.cn/api_3/swagger.json和除去未上线的ai引包的EUR接口来写的，应该是swagger.json动态生成了只写明了可以对外暴露的接口的原因，要写齐的话就要去原仓看了
-我感觉得写齐吧，这个check下？如果说copr本身就这样设计，那也能理解，就是只允许操作自己的创建的项目、build、package，不让查别人的，但是得有个结论，辛苦check下？
+  升级 copr-frontend 版本
+  - 涉及整个测试/生产环境的包版本变更，可能引入其他行为变化
+  - 需要验证 EUR 自己的 patch（add_openeuler_pkg、packages_statistics 等）在新版本上是否还能打上
+  - 这不是 OpenAPI spec 的问题，是基础设施决策
+  基于 v1.200 源码手动补齐 spec
+  - 只动 copr_openapi.yaml 这一个文件
+  - 风险极低，随时可回滚
+  - 但未来升级版本后需要重新评估
+
+确认了：swagger.json 不完整是因为 EUR 安装的 copr-frontend-1.200 处于 flask-restx 迁移过渡期，当前上游源码已迁移完毕、接口齐全。
+有两个方向：
+1. 升级 copr-frontend 版本 → swagger 自动补全，但需评估 EUR 自定义 patch 的兼容性，属于环境变更
+2. 基于 v1.200 源码手动扫描补齐 spec → 只改文档，零环境风险，但后续升级时需重新对齐
